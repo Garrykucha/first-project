@@ -18,6 +18,11 @@ export default {
   methods: {
     createPost(post) {
       this.posts.push(post);
+    },
+    deletePost(post) {
+      console.log(post.id)
+      this.posts = this.posts.filter(item => item.id !== post.id)
+
     }
   }
 }
@@ -26,7 +31,7 @@ export default {
 <template>
   <div class="app">
     <PostForm @create="createPost"/>
-    <PostList :posts1='posts'/>
+    <PostList :posts1='posts' @delete="deletePost"/>
   </div>
 </template>
 

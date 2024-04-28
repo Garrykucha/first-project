@@ -5,6 +5,11 @@ export default {
       type: Object,
       required: true,
     }
+  },
+  methods: {
+    delPost(){
+      this.$emit('delete',this.posts1);
+    }
   }
 }
 </script>
@@ -14,7 +19,7 @@ export default {
     <div><strong>Название: </strong>{{ posts1.title }}</div>
     <div><strong>Описание: </strong>{{ posts1.body }}</div>
     <div class="btn__item">
-      <button>
+      <button @click="delPost">
         Удалить
       </button>
     </div>
