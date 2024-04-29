@@ -6,9 +6,11 @@ import MySelect from "@/components/UI/MySelect.vue";
 import {getPosts} from "@/api/api.js";
 import CustomButton from "@/components/UI/CustomButton.vue";
 import {sortedPost} from "@/mixins/sort.js";
+import MyInput from "@/components/UI/MyInput.vue";
 
 export default {
   components: {
+    MyInput,
     CustomButton,
     MySelect,
     MyDialog,
@@ -23,7 +25,8 @@ export default {
       sortOptions: [
         {value: 'title', name: 'по названию'},
         {value: 'body', name: 'по описанию'},
-      ]
+      ],
+      searchQuery: '',
     }
   },
   methods: {
@@ -57,7 +60,11 @@ export default {
       sortedPost(this.posts, newValue)
     },
   },
-  computed: {}
+  computed: {
+    sortedAndsearchedPosts(){
+      return sortedPost.filter(this.posts, this.selectedSort)
+    }
+  }
 }
 </script>
 
@@ -69,6 +76,7 @@ export default {
           Добавить пост
         </CustomButton>
         <CustomButton @click="fetchPosts">Получить посты</CustomButton>
+        <MyInput v-model="searchQuery"></MyInput>
       </div>
       <div class="nav_item_2">
         <MySelect

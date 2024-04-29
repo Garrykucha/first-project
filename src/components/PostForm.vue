@@ -1,8 +1,8 @@
 <script>
 import CustomButton from "@/components/UI/CustomButton.vue";
-
+import MyInput from "@/components/UI/MyInput.vue";
 export default {
-  components: {CustomButton},
+  components: {CustomButton, MyInput},
   data() {
     return {
       post: {
@@ -27,18 +27,20 @@ export default {
 <template>
   <form @submit.prevent>
     <h4>Создание поста</h4>
-    <input
-      v-model="post.title"
-      class="input"
-      type="text"
-      placeholder="Название поста"
-    >
-    <input
-      v-model="post.body"
-      class="input"
-      type="text"
-      placeholder="Описание поста"
-    >
+<!--    <input-->
+<!--      v-model="this.post.title"-->
+<!--      class="input"-->
+<!--      type="text"-->
+<!--      placeholder="Название поста"-->
+<!--    >-->
+<!--    <input-->
+<!--      v-model="this.post.body"-->
+<!--      class="input"-->
+<!--      type="text"-->
+<!--      placeholder="Описание поста"-->
+<!--    >-->
+    <MyInput v-model="this.post.title" placeholder="Название поста"></MyInput>
+    <MyInput v-model="this.post.body" placeholder="Описание поста"></MyInput>
     <custom-button
       class="btn"
       @click="createPost"

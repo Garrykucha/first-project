@@ -14,6 +14,7 @@ export default {
   methods: {
     deletePost(post) {
       this.$emit('delete', post)
+      console.log(this.posts1)
     }
   }
 }
