@@ -12,7 +12,7 @@ export default {
     }
   },
   methods: {
-    delPost(post) {
+    deletePost(post) {
       this.$emit('delete', post)
     }
   }
@@ -20,18 +20,35 @@ export default {
 </script>
 
 <template>
-  <PostItem
-    v-if="posts1.length > 0"
-    v-for="post in posts1"
-    :posts1="post"
-    :key="post.id"
-    @delete="delPost"
-  />
-  <div v-else>
-    <h1>Список пуст</h1>
-  </div>
+  <transition-group name="post-list">
+    <PostItem
+      @delete="deletePost"
+      :posts1="post"
+      v-for="post in posts1"
+      :key="post.id"
+    />
+  </transition-group>
+
 </template>
 
 <style scoped>
+.post-list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
 
+.post-list-enter-active,
+.post-list-leave-active {
+  transition: all 0.1s;
+}
+
+.post-list-enter-from,
+.post-list-leave-to {
+  opacity: 0;
+  transform: translateX(130px);
+}
+
+.post-list-move {
+  transition: transform 0.2s ease;
+}
 </style>

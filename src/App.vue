@@ -2,11 +2,14 @@
 import PostList from '@/components/PostList.vue'
 import PostForm from '@/components/PostForm.vue'
 import MyDialog from "@/components/UI/MyDialog.vue";
-import axios from "axios";
 import MySelect from "@/components/UI/MySelect.vue";
+import {getPosts} from "@/api/api.js";
+import CustomButton from "@/components/UI/CustomButton.vue";
+import {sortedPost} from "@/mixins/sort.js";
 
 export default {
   components: {
+    CustomButton,
     MySelect,
     MyDialog,
     PostList,
@@ -16,7 +19,7 @@ export default {
     return {
       posts: [],
       dialogVisible: false,
-      selectedSort: 'Сортировать',
+      selectedSort: '',
       sortOptions: [
         {value: 'title', name: 'по названию'},
         {value: 'body', name: 'по описанию'},
@@ -27,6 +30,7 @@ export default {
     createPost(post) {
       this.posts.push(post);
       this.dialogVisible = false;
+      sortedPost(this.posts, this.selectedSort)
     },
     deletePost(post) {
       this.posts = this.posts.filter(item => item.id !== post.id)
@@ -37,8 +41,9 @@ export default {
     },
     async fetchPosts() {
       try {
-        const response = await axios.get("https://jsonplaceholder.typicode.com/posts?_limit=10")
+        const response = await getPosts()
         this.posts = this.posts.concat(response.data);
+        sortedPost(this.posts, this.selectedSort)
       } catch (error) {
         console.log('error', error)
       }
@@ -46,7 +51,13 @@ export default {
   },
   mounted() {
     this.fetchPosts();
-  }
+  },
+  watch: {
+    selectedSort(newValue) {
+      sortedPost(this.posts, newValue)
+    },
+  },
+  computed: {}
 }
 </script>
 
@@ -54,10 +65,10 @@ export default {
   <div class="app">
     <div class="nav_panel">
       <div class="nav_item_1">
-        <button @click="showDialog" class="add-post">
+        <CustomButton @click="showDialog">
           Добавить пост
-        </button>
-        <button class="add-post" @click="fetchPosts">Получить посты</button>
+        </CustomButton>
+        <CustomButton @click="fetchPosts">Получить посты</CustomButton>
       </div>
       <div class="nav_item_2">
         <MySelect
@@ -79,23 +90,14 @@ export default {
   padding: 0;
 }
 
-.app {
-  padding: 20px;
-  background-color: #aab7b7;
-  height: 100%;
-}
-
-.add-post {
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #939c9c;
-  border: none;
-  font-family: cursive;
-  margin-right: 5px;
-}
 
 .nav_panel {
   display: flex;
   justify-content: space-between;
+}
+
+.nav_item_1 {
+  display: flex;
+  gap: 10px;
 }
 </style>

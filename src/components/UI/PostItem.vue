@@ -1,5 +1,8 @@
 <script>
+import CustomButton from "@/components/UI/CustomButton.vue";
+
 export default {
+  components: {CustomButton},
   props: {
     posts1: {
       type: Object,
@@ -8,7 +11,7 @@ export default {
   },
   methods: {
     delPost() {
-      this.$emit('delete', this.posts1);
+      this.$emit('delete', this.posts1)
     }
   }
 }
@@ -18,34 +21,24 @@ export default {
   <div class="post">
     <div><strong>Название: </strong>{{ posts1.title }}</div>
     <div><strong>Описание: </strong>{{ posts1.body }}</div>
-    <div class="btn__item">
-      <button @click="delPost">
-        Удалить
-      </button>
-    </div>
+    <custom-button @click="delPost">
+      Удалить
+    </custom-button>
   </div>
 
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .post {
   padding: 15px;
+  border: 2px solid darkgreen;
   margin-top: 15px;
   border-radius: 10px;
-  background-color: gray;
-  font-family: cursive;
-
-  div {
-    padding: 5px;
-  }
-
 }
 
 .btn__item button {
   padding: 10px;
+  border: 2px solid black;
   border-radius: 5px;
-  background-color: #939c9c;
-  border: none;
-  font-family: cursive;
 }
 </style>
