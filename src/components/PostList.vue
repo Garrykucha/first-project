@@ -36,15 +36,18 @@ export default {
   display: inline-block;
   margin-right: 10px;
 }
+
 .post-list-enter-active,
 .post-list-leave-active {
   transition: all 0.1s;
 }
+
 .post-list-enter-from,
 .post-list-leave-to {
   opacity: 0;
   transform: translateX(130px);
 }
+
 .post-list-move {
   transition: transform 0.2s ease;
 }
