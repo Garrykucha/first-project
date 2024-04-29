@@ -1,6 +1,7 @@
 <script>
 import PostList from '@/components/PostList.vue'
 import PostForm from '@/components/PostForm.vue'
+import {getPosts} from "@/api/api.js";
 
 export default {
   components: {
@@ -16,8 +17,10 @@ export default {
     }
   },
   methods: {
-    createPost(post) {
+    async createPost(post) {
       this.posts.push(post);
+      const result = await getPosts()
+      console.log('result', result)
     },
     deletePost(post) {
       this.posts = this.posts.filter(item => item.id !== post.id)
@@ -28,8 +31,15 @@ export default {
 
 <template>
   <div class="app">
-    <PostForm @create="createPost"/>
-    <PostList :posts1='posts'/>
+    <PostForm
+      @create="createPost"
+    />
+    <PostList
+      @delete="deletePost"
+      :posts1='posts'
+    />
+
+
   </div>
 </template>
 

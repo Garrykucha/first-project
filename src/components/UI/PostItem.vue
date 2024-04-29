@@ -8,6 +8,11 @@ export default {
       type: Object,
       required: true,
     }
+  },
+  methods: {
+    delPost() {
+      this.$emit('delete', this.posts1)
+    }
   }
 }
 </script>
@@ -16,18 +21,19 @@ export default {
   <div class="post">
     <div><strong>Название: </strong>{{ posts1.title }}</div>
     <div><strong>Описание: </strong>{{ posts1.body }}</div>
-      <custom-button @click="delPost">
-        Удалить
-      </custom-button>
+    <custom-button @click="delPost">
+      Удалить
+    </custom-button>
   </div>
 
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .post {
   padding: 15px;
   border: 2px solid darkgreen;
   margin-top: 15px;
+  border-radius: 10px;
 }
 
 .btn__item button {
