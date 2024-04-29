@@ -19,6 +19,9 @@ export default {
   },
   data() {
     return {
+      page: 1,
+      limit: 10,
+      totalPages: 0,
       posts: [],
       dialogVisible: false,
       selectedSort: '',
@@ -44,25 +47,33 @@ export default {
     },
     async fetchPosts() {
       try {
-        const response = await getPosts()
-        this.posts = this.posts.concat(response.data);
+        const response = await getPosts(this.page, this.limit)
+        this.posts = response.data;
         sortedPost(this.posts, this.selectedSort)
+        this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit)
       } catch (error) {
         console.log('error', error)
       }
     },
+    changePage(pageNumber) {
+      this.page = pageNumber
+    }
   },
   mounted() {
     this.fetchPosts();
   },
   watch: {
-    selectedSort(newValue) {
-      sortedPost(this.posts, newValue)
-    },
+    page(){
+      this.fetchPosts()
+    }
   },
   computed: {
-    sortedAndsearchedPosts(){
-      return sortedPost.filter(this.posts, this.selectedSort)
+
+    selectedSortArr() {
+      return [...this.posts].sort((post1, post2) => post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]) )
+    },
+    sortedAndSearchedPosts(){
+      return this.selectedSortArr?.filter(post => post.title.toLowerCase().includes(this.searchQuery))
     }
   }
 }
@@ -75,8 +86,10 @@ export default {
         <CustomButton @click="showDialog">
           Добавить пост
         </CustomButton>
-        <CustomButton @click="fetchPosts">Получить посты</CustomButton>
-        <MyInput v-model="searchQuery"></MyInput>
+        <MyInput
+          v-model="searchQuery"
+          placeholder="Поиск"
+        />
       </div>
       <div class="nav_item_2">
         <MySelect
@@ -88,7 +101,20 @@ export default {
     <MyDialog v-model:show="dialogVisible">
       <PostForm @create="createPost"/>
     </MyDialog>
-    <PostList :posts1='posts' @delete="deletePost"/>
+    <PostList :posts1='sortedAndSearchedPosts' @delete="deletePost"/>
+    <div class="page__wraper">
+      <div
+        v-for="pageNumber in totalPages"
+        :key="page"
+        class="page"
+        :class="{
+          'current-page': page === pageNumber,
+        }"
+        @click="changePage(pageNumber)"
+      >
+        {{pageNumber}}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -107,5 +133,20 @@ export default {
 .nav_item_1 {
   display: flex;
   gap: 10px;
+}
+.page__wraper {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.page {
+  border: 1px solid teal;
+  padding: 5px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.current-page {
+  border: 2px solid #033636;
 }
 </style>

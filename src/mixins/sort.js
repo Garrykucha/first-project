@@ -1,7 +1,3 @@
 export const sortedPost = (currentPosts, isSorted) => {
-    if (isSorted) {
-        currentPosts.sort((a, b) => {
-            return a[isSorted]?.localeCompare(b[isSorted])
-        })
-    }
+    return [...currentPosts].sort((a, b) =>  {a[isSorted]?.localeCompare(b[isSorted]) })
 }
