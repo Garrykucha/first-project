@@ -2,10 +2,10 @@
 import PostList from '@/components/PostList.vue'
 import PostForm from '@/components/PostForm.vue'
 import MyDialog from "@/components/UI/MyDialog.vue";
-import axios from "axios";
 import MySelect from "@/components/UI/MySelect.vue";
 import {getPosts} from "@/api/api.js";
 import CustomButton from "@/components/UI/CustomButton.vue";
+import {sortedPost} from "@/mixins/sort.js";
 
 export default {
   components: {
@@ -27,10 +27,10 @@ export default {
     }
   },
   methods: {
-
     createPost(post) {
       this.posts.push(post);
       this.dialogVisible = false;
+      sortedPost(this.posts, this.selectedSort)
     },
     deletePost(post) {
       this.posts = this.posts.filter(item => item.id !== post.id)
@@ -43,6 +43,7 @@ export default {
       try {
         const response = await getPosts()
         this.posts = this.posts.concat(response.data);
+        sortedPost(this.posts, this.selectedSort)
       } catch (error) {
         console.log('error', error)
       }
@@ -50,7 +51,13 @@ export default {
   },
   mounted() {
     this.fetchPosts();
-  }
+  },
+  watch: {
+    selectedSort(newValue) {
+      sortedPost(this.posts, newValue)
+    },
+  },
+  computed: {}
 }
 </script>
 
@@ -58,13 +65,10 @@ export default {
   <div class="app">
     <div class="nav_panel">
       <div class="nav_item_1">
-        <div>
-          <v-progress-circular indeterminate :size="43" :width="5"></v-progress-circular>
-        </div>
-        <custom-button @click="showDialog" >
+        <CustomButton @click="showDialog">
           Добавить пост
-        </custom-button>
-        <custom-button @click="fetchPosts">Получить посты</custom-button>
+        </CustomButton>
+        <CustomButton @click="fetchPosts">Получить посты</CustomButton>
       </div>
       <div class="nav_item_2">
         <MySelect
@@ -86,19 +90,6 @@ export default {
   padding: 0;
 }
 
-.app {
-  padding: 20px;
-  height: 100%;
-}
-
-.add-post {
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #939c9c;
-  border: none;
-  font-family: cursive;
-  margin-right: 5px;
-}
 
 .nav_panel {
   display: flex;
