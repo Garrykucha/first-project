@@ -16,7 +16,7 @@ export default {
     return {
       posts: [],
       dialogVisible: false,
-      selectedSort: 'Сортировать',
+      selectedSort: '',
       sortOptions: [
         {value: 'title', name: 'по названию'},
         {value: 'body', name: 'по описанию'},

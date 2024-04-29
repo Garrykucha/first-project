@@ -4,6 +4,7 @@ export default {
   props: {
     modelValue: {
       type: String,
+      required: true,
     },
     options: {
       type: Array,
@@ -12,10 +13,13 @@ export default {
   },
   methods: {
     changeOption(event) {
+      console.log(event.target.value)
       this.$emit('update:modelValue', event.target.value);
     }
-  }
+  },
 }
+
+
 </script>
 
 <template>
