@@ -1,5 +1,8 @@
 <script>
+import CustomButton from "@/components/UI/CustomButton.vue";
+
 export default {
+  components: {CustomButton},
   data() {
     return {
       post: {
@@ -36,12 +39,12 @@ export default {
       type="text"
       placeholder="Описание поста"
     >
-    <button
+    <custom-button
       class="btn"
       @click="createPost"
     >
       Добавить
-    </button>
+    </custom-button>
 
   </form>
 </template>
@@ -58,13 +61,6 @@ form {
   display: flex;
   flex-direction: column;
 
-  .btn {
-    align-self: flex-end;
-    margin-top: 10px;
-    padding: 15px 15px;
-    background-color: none;
-    color: teal;
-    border: 1px solid teal;
-  }
+
 }
 </style>

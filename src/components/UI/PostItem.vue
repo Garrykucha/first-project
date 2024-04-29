@@ -1,5 +1,8 @@
 <script>
+import CustomButton from "@/components/UI/CustomButton.vue";
+
 export default {
+  components: {CustomButton},
   props: {
     posts1: {
       type: Object,
@@ -13,11 +16,9 @@ export default {
   <div class="post">
     <div><strong>Название: </strong>{{ posts1.title }}</div>
     <div><strong>Описание: </strong>{{ posts1.body }}</div>
-    <div class="btn__item">
-      <button>
+      <custom-button @click="delPost">
         Удалить
-      </button>
-    </div>
+      </custom-button>
   </div>
 
 </template>

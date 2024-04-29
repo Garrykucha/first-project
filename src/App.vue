@@ -17,7 +17,10 @@ export default {
   },
   methods: {
     createPost(post) {
-      this.posts.push(post); //TODO переделай тут всё!!! шуе
+      this.posts.push(post);
+    },
+    deletePost(post) {
+      this.posts = this.posts.filter(item => item.id !== post.id)
     }
   }
 }
