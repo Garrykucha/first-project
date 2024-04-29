@@ -4,6 +4,7 @@ import PostForm from '@/components/PostForm.vue'
 import MyDialog from "@/components/UI/MyDialog.vue";
 import axios from "axios";
 import MySelect from "@/components/UI/MySelect.vue";
+import {getPosts} from "@/api/api.js";
 
 export default {
   components: {
@@ -24,6 +25,7 @@ export default {
     }
   },
   methods: {
+
     createPost(post) {
       this.posts.push(post);
       this.dialogVisible = false;
@@ -37,7 +39,7 @@ export default {
     },
     async fetchPosts() {
       try {
-        const response = await axios.get("https://jsonplaceholder.typicode.com/posts?_limit=10")
+        const response = await getPosts()
         this.posts = this.posts.concat(response.data);
       } catch (error) {
         console.log('error', error)
