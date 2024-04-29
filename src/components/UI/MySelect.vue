@@ -20,7 +20,7 @@ export default {
 
 <template>
   <select :value="modelValue" @change="changeOption">
-    <option disabled value="">Выберите из списка</option>
+    <option value="">123</option>
     <option
       v-for="option in options"
       :key="option.value"

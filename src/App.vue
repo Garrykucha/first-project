@@ -5,9 +5,11 @@ import MyDialog from "@/components/UI/MyDialog.vue";
 import axios from "axios";
 import MySelect from "@/components/UI/MySelect.vue";
 import {getPosts} from "@/api/api.js";
+import CustomButton from "@/components/UI/CustomButton.vue";
 
 export default {
   components: {
+    CustomButton,
     MySelect,
     MyDialog,
     PostList,
@@ -17,7 +19,7 @@ export default {
     return {
       posts: [],
       dialogVisible: false,
-      selectedSort: 'Сортировать',
+      selectedSort: '',
       sortOptions: [
         {value: 'title', name: 'по названию'},
         {value: 'body', name: 'по описанию'},
@@ -56,10 +58,13 @@ export default {
   <div class="app">
     <div class="nav_panel">
       <div class="nav_item_1">
-        <button @click="showDialog" class="add-post">
+        <div>
+          <v-progress-circular indeterminate :size="43" :width="5"></v-progress-circular>
+        </div>
+        <custom-button @click="showDialog" >
           Добавить пост
-        </button>
-        <button class="add-post" @click="fetchPosts">Получить посты</button>
+        </custom-button>
+        <custom-button @click="fetchPosts">Получить посты</custom-button>
       </div>
       <div class="nav_item_2">
         <MySelect
@@ -83,7 +88,6 @@ export default {
 
 .app {
   padding: 20px;
-  background-color: #aab7b7;
   height: 100%;
 }
 
@@ -99,5 +103,10 @@ export default {
 .nav_panel {
   display: flex;
   justify-content: space-between;
+}
+
+.nav_item_1 {
+  display: flex;
+  gap: 10px;
 }
 </style>
