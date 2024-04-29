@@ -12,8 +12,8 @@ export default {
     }
   },
   methods: {
-    delPost(post){
-      this.$emit('delete',post)
+    delPost(post) {
+      this.$emit('delete', post)
     }
   }
 }
@@ -21,11 +21,15 @@ export default {
 
 <template>
   <PostItem
-    :posts1="post"
+    v-if="posts1.length > 0"
     v-for="post in posts1"
+    :posts1="post"
     :key="post.id"
     @delete="delPost"
   />
+  <div v-else>
+    <h1>Список пуст</h1>
+  </div>
 </template>
 
 <style scoped>

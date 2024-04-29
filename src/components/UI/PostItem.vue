@@ -7,8 +7,8 @@ export default {
     }
   },
   methods: {
-    delPost(){
-      this.$emit('delete',this.posts1);
+    delPost() {
+      this.$emit('delete', this.posts1);
     }
   }
 }
@@ -30,13 +30,22 @@ export default {
 <style scoped>
 .post {
   padding: 15px;
-  border: 2px solid darkgreen;
   margin-top: 15px;
+  border-radius: 10px;
+  background-color: gray;
+  font-family: cursive;
+
+  div {
+    padding: 5px;
+  }
+
 }
 
 .btn__item button {
   padding: 10px;
-  border: 2px solid black;
   border-radius: 5px;
+  background-color: #939c9c;
+  border: none;
+  font-family: cursive;
 }
 </style>
