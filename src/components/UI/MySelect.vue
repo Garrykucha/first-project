@@ -13,7 +13,6 @@ export default {
   },
   methods: {
     changeOption(event) {
-      console.log(event.target.value)
       this.$emit('update:modelValue', event.target.value);
     }
   },
