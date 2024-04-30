@@ -9,6 +9,9 @@ export default {
     posts1: {
       type: Array,
       required: true,
+    },
+    isLoading: {
+      type: Boolean
     }
   },
   methods: {
@@ -22,17 +25,38 @@ export default {
 
 <template>
   <transition-group name="post-list">
-    <PostItem
-      @delete="deletePost"
-      :posts1="post"
-      v-for="post in posts1"
-      :key="post.id"
-    />
+    <div
+      style="margin: 0 10px"
+      v-if="!isLoading"
+    >
+      <PostItem
+        @delete="deletePost"
+        :posts1="post"
+        v-for="post in posts1"
+        :key="post.id"
+      />
+    </div>
+    <div>
+      <v-progress-circular
+        v-if="isLoading"
+        indeterminate
+        color="#22c07a"
+        :width="5"
+        :size="40"
+        class="loading-circle"
+      />
+    </div>
+
   </transition-group>
 
 </template>
 
 <style scoped>
+.loading-circle {
+  position: absolute;
+  top: calc(50% - 20px);
+  left: calc(50% - 20px);
+}
 .post-list-item {
   display: inline-block;
   margin-right: 10px;

@@ -38,7 +38,8 @@ export default {
   background-color: rgba(0, 0, 0, 0.5);
 
   &-item {
-    background-color: #939c9c;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 50px 0 rgba(0, 1, 1, 0.5);
     margin: auto;
     padding: 20px;
     width: 400px;

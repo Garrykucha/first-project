@@ -22,7 +22,7 @@ export default {
 </script>
 
 <template>
-  <select :value="modelValue" @change="changeOption">
+  <select class="select" :value="modelValue" @change="changeOption">
     <option value="">Выберите значение</option>
     <option
       v-for="option in options"
@@ -34,5 +34,9 @@ export default {
 </template>
 
 <style scoped>
-
+.select {
+  border: 1px solid #b2b2b2;
+  border-radius: 5px;
+  padding: 4px;
+}
 </style>
