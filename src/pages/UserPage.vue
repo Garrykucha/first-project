@@ -8,6 +8,7 @@ import CustomButton from "@/components/UI/CustomButton.vue";
 import {sortedPost} from "@/mixins/sort.js";
 import MyInput from "@/components/UI/MyInput.vue";
 
+
 export default {
   components: {
     MyInput,
@@ -93,6 +94,10 @@ export default {
           v-model="searchQuery"
           placeholder="Поиск"
         />
+          <custom-button @click="$router.push('/favorites')">
+            Избранное: {{$store.state.favoriteModule.favorites.length}}
+          </custom-button>
+
       </div>
       <div class="nav_item_2">
         <MySelect

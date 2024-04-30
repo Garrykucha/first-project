@@ -10,13 +10,11 @@ export default {
   <div class="bg">
 
   </div>
-  <router-link to="/userPage">
-    <custom-button class="navigateBtn">
+    <custom-button @click="$router.push('/userPage')" class="navigateBtn">
       <h1>
         Welcome
       </h1>
     </custom-button>
-  </router-link>
   <div class="circle" />
 
 </template>

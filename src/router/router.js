@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory} from "vue-router";
 import Main from "@/pages/Main.vue";
 import UserPage from "@/pages/UserPage.vue";
+import FavoritesPosts from "@/pages/FavoritesPosts.vue";
 
 const routes = [
   {
@@ -10,6 +11,10 @@ const routes = [
   {
     path: '/userPage',
     component: UserPage
+  },
+  {
+    path: '/favorites',
+    component: FavoritesPosts
   }
 ]
 
