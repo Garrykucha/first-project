@@ -1,7 +1,11 @@
 <script>
 import CustomButton from "@/components/UI/CustomButton.vue";
 import MyInput from "@/components/UI/MyInput.vue";
+import VFocus from "@/directives/VFocus.js";
 export default {
+  directives: {
+    'focus': VFocus
+  },
   components: {CustomButton, MyInput},
   data() {
     return {
@@ -39,7 +43,7 @@ export default {
 <!--      type="text"-->
 <!--      placeholder="Описание поста"-->
 <!--    >-->
-    <MyInput v-model="this.post.title" placeholder="Название поста"></MyInput>
+    <MyInput v-focus v-model="this.post.title" placeholder="Название поста"></MyInput>
     <MyInput v-model="this.post.body" placeholder="Описание поста"></MyInput>
     <custom-button
       class="btn"
@@ -52,12 +56,7 @@ export default {
 </template>
 
 <style scoped>
-.input {
-  width: 90%;
-  border: none;
-  padding: 15px;
-  margin-top: 15px;
-}
+
 
 form {
   display: flex;

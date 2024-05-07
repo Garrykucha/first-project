@@ -14,3 +14,12 @@ export default defineConfig({
     }
   }
 })
+
+/*module.exports = {
+  pwa: {
+    // ...
+    // Если пункт "Basic Page" уже есть, обновите его
+    icon: true,
+    // ...
+  }
+};*/

@@ -23,7 +23,7 @@ export default {
 
 <template>
   <select :value="modelValue" @change="changeOption">
-    <option value="">Выберите значение</option>
+    <option disabled value="">Выберите значение</option>
     <option
       v-for="option in options"
       :key="option.value"
@@ -34,5 +34,7 @@ export default {
 </template>
 
 <style scoped>
-
+select {
+  padding: 5px;
+}
 </style>

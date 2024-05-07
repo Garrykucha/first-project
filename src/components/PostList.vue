@@ -23,10 +23,10 @@ export default {
 <template>
   <transition-group name="post-list">
     <PostItem
-      @delete="deletePost"
-      :posts1="post"
       v-for="post in posts1"
+      :posts1="post"
       :key="post.id"
+      @delete="deletePost"
     />
   </transition-group>
 

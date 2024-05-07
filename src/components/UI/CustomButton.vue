@@ -14,7 +14,6 @@ export default defineComponent({
 
 <style scoped>
 .btn {
-  margin-top: 10px;
   padding: 15px 15px;
   cursor: pointer;
   align-self: flex-end;
@@ -24,7 +23,6 @@ export default defineComponent({
   border: 1px solid teal;
   border-radius: 5px;
   transition: all 0.3s;
-
   &:hover {
     background-color: teal;
     color: white;
