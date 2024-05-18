@@ -22,7 +22,7 @@ export default {
     <div><strong>id: </strong>{{posts1.id}}</div>
     <div><strong>Название: </strong>{{ posts1.title }}</div>
     <div><strong>Описание: </strong>{{ posts1.body }}</div>
-    <custom-button class="btn_open" @click="$router.push(`posts/${posts1.id}`)">
+    <custom-button class="btn_open" @click="console.log(posts1); $router.push({name: 'post', props: posts1})">
       Открыть
     </custom-button>
     <custom-button @click="delPost">

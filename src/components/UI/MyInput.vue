@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     updateInput(event) {
-      this.$emit('update:modelValue', event.target.value)
+      this.$emit('model-value', event.target.value)
     }
   }
 }
@@ -31,6 +31,6 @@ export default {
   border: 2px solid darkgreen;
   border-radius: 5px;
   padding: 15px;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 </style>

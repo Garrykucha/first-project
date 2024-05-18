@@ -3,11 +3,10 @@ import PostList from '@/components/PostList.vue'
 import PostForm from '@/components/PostForm.vue'
 import MyDialog from "@/components/UI/MyDialog.vue";
 import MySelect from "@/components/UI/MySelect.vue";
-import {getPosts} from "@/api/api.js";
 import CustomButton from "@/components/UI/CustomButton.vue";
 import MyInput from "@/components/UI/MyInput.vue";
-import axios from "axios";
 import VIntersection from "@/directives/VIntersection.js";
+import {mapState, mapGetters, mapActions, mapMutations} from "vuex";
 
 export default {
   directives: {
@@ -23,65 +22,35 @@ export default {
   },
   data() {
     return {
-      loading: true,
-      page: 1,
-      limit: 10,
-      totalPages: 0,
-      posts: [],
       dialogVisible: false,
-      selectedSort: '',
-      sortOptions: [
-        {value: 'title', name: 'по названию'},
-        {value: 'body', name: 'по описанию'},
-        {value: 'id', name: 'по id'}
-      ],
-      searchQuery: '',
     }
   },
   methods: {
+    ...mapMutations({
+      setPage: 'post/setPage',
+      setPosts: 'post/setPosts',
+      setSearchQuery: 'post/setSearchQuery',
+      setSelectedSort: 'post/setSelectedSort',
+    }),
+    ...mapActions({
+      loadMorePosts: 'post/loadMorePosts',
+      fetchPosts: 'post/fetchPosts',
+    }),
     createPost(post) {
-      this.posts.push(post);
+      let new_arr = [...this.posts, post]
+      this.setPosts(new_arr)
+      /*this.posts.push(post);*/
       this.dialogVisible = false;
 
     },
     deletePost(post) {
-      this.posts = this.posts.filter(item => item.id !== post.id)
+      let new_arr = this.posts.filter(item => item.id !== post.id)
+      this.setPosts(new_arr)
+      /*this.posts = this.posts.filter(item => item.id !== post.id)*/
 
     },
     showDialog() {
       this.dialogVisible = true;
-    },
-    async fetchPosts() {
-      try {
-        let response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
-          params: {
-            _page: this.page,
-            _limit: this.limit
-          }
-        });
-        this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit)
-        this.posts = response.data;
-        this.loading = false;
-      } catch (error) {
-        console.log('error', error)
-      }
-    },
-    async loadMorePosts() {
-      try {
-        this.loading = true;
-        this.page += 1;
-        let response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
-          params: {
-            _page: this.page,
-            _limit: this.limit
-          }
-        });
-        this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit)
-        this.posts = [...this.posts, ...response.data];
-        this.loading = false;
-      } catch (error) {
-        console.log('error', error)
-      }
     },
   },
   mounted() {
@@ -89,19 +58,21 @@ export default {
   },
   watch: {},
   computed: {
-    selectedSortArr() {
-      return [...this.posts].sort((post1, post2) => {
-        if (typeof post1[this.selectedSort] === 'number') {
-          return post1[this.selectedSort] - post2[this.selectedSort]
-        }
-        return post1[this.selectedSort]?.localeCompare(post2[this.selectedSort])
-      })
-    },
-    sortedAndSearchedPosts() {
-      return this.selectedSortArr?.filter(post => post.title.toLowerCase().includes(this.searchQuery))
-    }
-  },
-
+    ...mapGetters({
+      selectedSortArr: 'post/selectedSortArr',
+      sortedAndSearchedPosts: 'post/sortedAndSearchedPosts',
+    }),
+    ...mapState({
+      loading: state => state.post.loading,
+      page: state => state.post.page,
+      limit: state => state.post.limit,
+      totalPages: state => state.post.totalPages,
+      posts: state => state.post.posts,
+      selectedSort: state => state.post.selectedSort,
+      sortOptions: state => state.post.sortOptions,
+      searchQuery: state => state.post.searchQuery,
+    }),
+  }
 }
 </script>
 
@@ -113,16 +84,16 @@ export default {
           Добавить пост
         </CustomButton>
         <MyInput
-          v-model="searchQuery"
+          :modelValue="searchQuery"
+          @model-value="setSearchQuery"
           placeholder="Поиск"
-          @model-value="(value) => {this.searchQuery = value}"
         />
       </div>
       <div class="nav_item_2">
         <MySelect
-          :model-value="selectedSort"
+          :modelValue="selectedSort"
           :options="sortOptions"
-          @select="(choice) => {this.selectedSort = choice}"
+          @select="setSelectedSort"
         />
       </div>
     </div>
@@ -130,7 +101,7 @@ export default {
       <PostForm @create="createPost"/>
     </MyDialog>
     <PostList :posts1='sortedAndSearchedPosts' @delete="deletePost"/>
-    <div v-if="!this.loading" v-intersection="loadMorePosts" class="observer"></div>
+    <div v-if="!this.loading" v-intersection="this.loadMorePosts" class="observer"></div>
     <!--    <div class="page__wraper">
           <div
             v-for="pageNumber in totalPages"

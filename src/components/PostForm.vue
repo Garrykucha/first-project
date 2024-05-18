@@ -43,8 +43,8 @@ export default {
 <!--      type="text"-->
 <!--      placeholder="Описание поста"-->
 <!--    >-->
-    <MyInput v-focus v-model="this.post.title" placeholder="Название поста"></MyInput>
-    <MyInput v-model="this.post.body" placeholder="Описание поста"></MyInput>
+    <MyInput v-focus :model-value="this.post.title" @model-value="(title) => this.post.title = title" placeholder="Название поста"></MyInput>
+    <MyInput :model-value="this.post.body" @model-value="(body) => this.post.body = body" placeholder="Описание поста"></MyInput>
     <custom-button
       class="btn"
       @click="createPost"
@@ -61,7 +61,9 @@ export default {
 form {
   display: flex;
   flex-direction: column;
+  .btn {
 
+  }
 
 }
 </style>

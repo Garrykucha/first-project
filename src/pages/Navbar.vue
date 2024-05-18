@@ -13,6 +13,8 @@ export default {
     <div class="navbar__btns">
       <CustomButton @click="$router.push('/posts')">Пользователи</CustomButton>
       <CustomButton @click="$router.push('/about')" style="margin-left: 20px">О сайте</CustomButton>
+      <CustomButton @click="$router.push('/store')" style="margin-left: 20px">Store</CustomButton>
+      <CustomButton @click="$router.push('/composition')" style="margin-left: 20px">Composition</CustomButton>
     </div>
   </div>
 </template>
